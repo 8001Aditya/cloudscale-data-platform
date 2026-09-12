@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Environment and local configuration
+.env
+.env.*
+!.env.example
+
+# Build artifacts
+build/
+dist/
+coverage.xml
+htmlcov/
+
+# Local generated data
+data/
+
+# Terraform state and local overrides
+*.tfstate
+*.tfstate.*
+.terraform/
+crash.log
+*.tfvars
+!*.tfvars.example
+
+# Databricks local state
+.databricks/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
