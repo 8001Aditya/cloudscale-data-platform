@@ -1,0 +1,7 @@
+project_name = "cloudscale"
+environment  = "dev"
+location     = "centralindia"
+
+# Example only. Prefer setting ARM_SUBSCRIPTION_ID in your shell instead of
+# storing a subscription ID in a tfvars file.
+# subscription_id = "00000000-0000-0000-0000-000000000000"
