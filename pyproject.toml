@@ -14,10 +14,15 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
 ]
-dependencies = []
+
+dependencies = [
+    "azure-storage-file-datalake>=12.16,<13.0",
+    "azure-identity>=1.19,<2.0",
+]
 
 [project.scripts]
 cloudscale-produce-orders = "cloudscale_data_platform.producer.cli:main"
+cloudscale-ingest-raw = "cloudscale_data_platform.ingestion.cli:main"
 
 [project.optional-dependencies]
 dev = [
