@@ -60,19 +60,37 @@ class AdlsRawIngester:
             f"_{unique_id}{local_file.suffix}"
         )
 
-        directory_client = self.file_system_client.get_directory_client(destination_directory)
+        # Create the directory hierarchy one level at a time.
+        directory_parts = destination_directory.split("/")
+        current_directory = ""
 
-        try:
-            directory_client.create_directory()
-        except ResourceExistsError:
-            pass
+        for part in directory_parts:
+            current_directory = f"{current_directory}/{part}" if current_directory else part
+
+            directory_client = self.file_system_client.get_directory_client(current_directory)
+
+            try:
+                directory_client.create_directory()
+            except ResourceExistsError:
+                pass
 
         file_client = self.file_system_client.get_file_client(destination_file)
 
+        # Create the file explicitly, then append and flush the data.
+        file_client.create_file()
+
         with local_file.open("rb") as source_file:
-            file_client.upload_data(
-                source_file,
-                overwrite=False,
+            data = source_file.read()
+
+        if data:
+            file_client.append_data(
+                data=data,
+                offset=0,
+                length=len(data),
+            )
+
+            file_client.flush_data(
+                offset=len(data),
             )
 
         return destination_file
